@@ -10,4 +10,10 @@ def driver():
     yield driver
     driver.quit()
 
-
+@pytest.fixture(scope='class')
+def driver2():
+    driver_path = Service('C:\geckodriver.exe')
+    driver = webdriver.Firefox(service= driver_path)
+    driver.maximize_window()
+    yield driver
+    driver.quit()

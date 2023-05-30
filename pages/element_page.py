@@ -1,5 +1,5 @@
 from pages.base_page import BasePage
-from locators.Locators import TextBoxPageLocators
+from locators.Locators import TextBoxPageLocators, RadioButtonPageLocators
 from generator.generator import generate_data
 
 
@@ -32,6 +32,18 @@ class TextBoxPage(BasePage):
         output_permanent_address.replace('\n', ' ')
         return output_full_name, output_email, output_current_address, output_permanent_address
 
+class RadioButtonPage(BasePage):
+    locators = RadioButtonPageLocators()
 
+    def yes_button_click(self):
+        self.element_is_present(self.locators.YES).click()
 
+    def no_button_click(self):
+        self.element_is_clicable(self.locators.NO).click()
 
+    def impressinve_button_click(self):
+        self.element_is_clicable(self.locators.IMPRESSIVE).click()
+
+    def get_result_text(self):
+        result_text = self.element_is_present(self.locators.TEXT_SUCCESS).text
+        return result_text
