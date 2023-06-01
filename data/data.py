@@ -6,3 +6,8 @@ class Person:
     EMAIL: str = None
     CURRENT_ADDRESS: str = None
     PERMANENT_ADDRESS: str = None
+    FIRST_NAME: str = None
+    LAST_NAME: str = None
+    AGE: str = None
+    SALARY: str = None
+    DEPARTMENT: str = None
