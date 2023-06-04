@@ -16,13 +16,15 @@ class TextBoxPageLocators:
     OUTPUT_CURRENT_ADDRESS = (By.CSS_SELECTOR, '#output #currentAddress')
     OUTPUT_PERMANENT_ADDRESS = (By.CSS_SELECTOR, '#output #permanentAddress')
 
+
 class RadioButtonPageLocators:
     YES = (By.CSS_SELECTOR, 'label[for="yesRadio"]')
     NO = (By.CSS_SELECTOR, 'label[for="noRadio"]')
     IMPRESSIVE = (By.CSS_SELECTOR, 'label[for="impressiveRadio"]')
     TEXT_SUCCESS = (By.CSS_SELECTOR, '.text-success')
 
-class WebrTablesLocators:
+
+class WebTablesPageLocators:
     # Add
     ADD_BUTT = (By.CSS_SELECTOR, '#addNewRecordButton')
 
@@ -35,17 +37,29 @@ class WebrTablesLocators:
     SUBMIT_BUTT = (By.CSS_SELECTOR, '#submit')
 
     # Result table
-        # Magic time =)
+    # Magic time =)
     PERSONS = (By.XPATH, '//div[starts-with(@class, "rt-tr -") and not(starts-with(@class, "rt-tr -padRow"))]')
     ALL_DATA_OF_CURRENT_PERSON = (By.CSS_SELECTOR, '[role="gridcell"]')
 
-    #Search
+    # Search
     SEARCH_INPUT = (By.CSS_SELECTOR, '#searchBox')
 
-    #Edit
+    # Edit
     EDIT_BUTT = (By.CSS_SELECTOR, 'span[title="Edit"]')
     DELETE_BUTT = (By.CSS_SELECTOR, 'span[title="Delete"]')
 
     # Pagination rows
     ROWS_ON_PAGE = (By.CSS_SELECTOR, 'div[role="rowgroup"]')
     ROWS_SELECTOR = (By.CSS_SELECTOR, 'select[aria-label="rows per page"]')
+
+
+class ClickButtonsPageLocators:
+    # ClickButtons
+    DOUBLE_CLICK_BUTT = (By.CSS_SELECTOR, '#doubleClickBtn')
+    RIGHT_CLICK_BUTT = (By.CSS_SELECTOR, '#rightClickBtn')
+    SINGLE_CLICK_BUTT = (By.CSS_SELECTOR, 'div[class="mt-4"]:nth-child(3)>button')
+
+    # ClickButtons messages
+    DOUBLE_CLICK_MESS = (By.CSS_SELECTOR, '#doubleClickMessage')
+    RIGHT_CLICK_MESS = (By.CSS_SELECTOR, '#rightClickMessage')
+    SINGLE_CLICK_MESS = (By.CSS_SELECTOR, '#dynamicClickMessage')

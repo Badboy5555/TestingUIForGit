@@ -1,7 +1,7 @@
 from selenium.webdriver.support.select import Select
-
 from pages.base_page import BasePage
-from locators.Locators import TextBoxPageLocators, RadioButtonPageLocators, WebrTablesLocators
+from locators.Locators import TextBoxPageLocators, RadioButtonPageLocators, WebTablesPageLocators, \
+    ClickButtonsPageLocators
 from generator.generator import generate_data
 
 
@@ -53,8 +53,8 @@ class RadioButtonPage(BasePage):
         return result_text
 
 
-class WebrTablesPage(BasePage):
-    locators = WebrTablesLocators()
+class WebTablesPage(BasePage):
+    locators = WebTablesPageLocators()
 
     def create_random_persons(self, how_much=2):
         """ Creates 'how_much' number of persons,
@@ -150,3 +150,23 @@ class WebrTablesPage(BasePage):
         select_rows.select_by_value(rows_amount)
         number_of_rows = len(self.elements_are_present(self.locators.ROWS_ON_PAGE))
         return number_of_rows
+
+
+class ClickButtonsPage(BasePage):
+    locators = ClickButtonsPageLocators()
+
+    def click_double_click_butt(self):
+        self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTT))
+
+    def click_right_click_butt(self):
+        self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTT))
+
+    def click_single_click_butt(self):
+        self.element_is_visible(self.locators.SINGLE_CLICK_BUTT).click()
+
+    def get_click_result(self, butt):
+        match butt:
+            case 'double': butt = self.locators.DOUBLE_CLICK_MESS
+            case 'right': butt = self.locators.RIGHT_CLICK_MESS
+            case 'single': butt = self.locators.SINGLE_CLICK_MESS
+        return self.element_is_visible(butt).text

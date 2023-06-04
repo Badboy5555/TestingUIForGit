@@ -2,7 +2,7 @@ import random
 import time
 
 import pytest
-from pages.element_page import TextBoxPage, RadioButtonPage, WebrTablesPage
+from pages.element_page import TextBoxPage, RadioButtonPage, WebTablesPage, ClickButtonsPage
 
 
 class TestElements:
@@ -48,7 +48,7 @@ class TestElements:
         @pytest.fixture
         def web_table_setup(self, driver2):
             url = 'https://demoqa.com/webtables'
-            self.web_table_page = WebrTablesPage(driver2, url)
+            self.web_table_page = WebTablesPage(driver2, url)
             self.web_table_page.open()
 
         @pytest.mark.parametrize('how_much', [2])
@@ -95,8 +95,7 @@ class TestElements:
             first_name_after_edit = self.web_table_page.get_last_person()[0]
 
             assert first_name_after_edit == query and \
-                   first_name_after_edit != first_name_before_edit \
-                , f'New first name != {query}'
+                   first_name_after_edit != first_name_before_edit, f'New first name != {query}'
 
         def test_web_table_delete_new_random_person(self):
             self.web_table_page.create_random_persons(1)
@@ -112,3 +111,29 @@ class TestElements:
             number_of_rows = self.web_table_page.switch_rows(rows_amount)
 
             assert number_of_rows == int(rows_amount)
+
+    @pytest.mark.usefixtures('click_buttons_page_setup')
+    class TestClickButtons:
+        @pytest.fixture
+        def click_buttons_page_setup(self, driver2):
+            url = 'https://demoqa.com/buttons'
+            self.click_buttons_page = ClickButtonsPage(driver2, url)
+            self.click_buttons_page.open()
+
+        def test_click_buttons_page_double_click(self):
+            self.click_buttons_page.click_double_click_butt()
+            result_mess = self.click_buttons_page.get_click_result('double')
+
+            assert 'You have done a double click' == result_mess
+
+        def test_click_buttons_page_right_click(self):
+            self.click_buttons_page.click_right_click_butt()
+            result_mess = self.click_buttons_page.get_click_result('right')
+
+            assert 'You have done a right click' == result_mess
+
+        def test_click_buttons_page_single_click(self):
+            self.click_buttons_page.click_single_click_butt()
+            result_mess = self.click_buttons_page.get_click_result('single')
+
+            assert 'You have done a dynamic click' == result_mess
