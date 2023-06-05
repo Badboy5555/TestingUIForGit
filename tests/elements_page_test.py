@@ -2,7 +2,7 @@ import random
 import time
 
 import pytest
-from pages.element_page import TextBoxPage, RadioButtonPage, WebTablesPage, ClickButtonsPage
+from pages.element_page import TextBoxPage, RadioButtonPage, WebTablesPage, ClickButtonsPage, LinksPage
 
 
 class TestElements:
@@ -124,16 +124,51 @@ class TestElements:
             self.click_buttons_page.click_double_click_butt()
             result_mess = self.click_buttons_page.get_click_result('double')
 
-            assert 'You have done a double click' == result_mess
+            assert 'You have done a double click' == result_mess, 'Button double_click wasn\'t clicked.'
 
         def test_click_buttons_page_right_click(self):
             self.click_buttons_page.click_right_click_butt()
             result_mess = self.click_buttons_page.get_click_result('right')
 
-            assert 'You have done a right click' == result_mess
+            assert 'You have done a right click' == result_mess, 'Button right_click wasn\'t clicked.'
 
         def test_click_buttons_page_single_click(self):
             self.click_buttons_page.click_single_click_butt()
             result_mess = self.click_buttons_page.get_click_result('single')
 
-            assert 'You have done a dynamic click' == result_mess
+            assert 'You have done a dynamic click' == result_mess, 'Button single_click wasn\'t clicked.'
+
+    @pytest.mark.usefixtures('test_links_page_setup')
+    class TestLinks:
+        @pytest.fixture
+        def test_links_page_setup(self, driver2):
+            url = 'https://demoqa.com/links'
+            self.test_links_page = LinksPage(driver2, url)
+            self.test_links_page.open()
+
+        def test_open_new_tab(self):
+            current_url = self.test_links_page.get_tab_url()
+            self.test_links_page.click_simple_link()
+            new_tab_url = self.test_links_page.get_tab_url()
+
+            assert current_url == new_tab_url, 'New tab has different url.'
+
+        @pytest.mark.parametrize('api_link', ['Created', 'Moved', 'Unauthorized'])
+        def test_satus_mess_and_code(self, api_link):
+            self.test_links_page.click_api_link(api_link)
+            status_code, status_mess = self.test_links_page.get_satus_mess_and_code(api_link)
+
+            match api_link:
+                case 'Created':
+                    assert status_code in 'Link has responded with staus 201 and status text Created' and \
+                           status_mess in 'Link has responded with staus 201 and status text Created', \
+                           'Wrong status message or status code'
+                case 'Moved':
+                    assert status_code in 'Link has responded with staus 301 and status text Moved Permanently' and \
+                           status_mess in 'Link has responded with staus 301 and status text Moved Permanently', \
+                           'Wrong status message or status code'
+                case 'Unauthorized':
+                    assert status_code in 'Link has responded with staus 401 and status text Unauthorized' and \
+                           status_mess in 'Link has responded with staus 401 and status text Unauthorized', \
+                           'Wrong status message or status code'
+

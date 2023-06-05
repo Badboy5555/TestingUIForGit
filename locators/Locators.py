@@ -63,3 +63,13 @@ class ClickButtonsPageLocators:
     DOUBLE_CLICK_MESS = (By.CSS_SELECTOR, '#doubleClickMessage')
     RIGHT_CLICK_MESS = (By.CSS_SELECTOR, '#rightClickMessage')
     SINGLE_CLICK_MESS = (By.CSS_SELECTOR, '#dynamicClickMessage')
+
+class LinksPageLocators:
+    #New tab liks
+    SIMPLE_LINK = (By.CSS_SELECTOR, '#simpleLink')
+    DYNAMIC_LINK = (By.CSS_SELECTOR, '#dynamicLink')
+
+    # API call links
+    API_CREATED_LINK = (By.CSS_SELECTOR, '#created')
+    API_MOVED_LINK = (By.CSS_SELECTOR, '#moved')
+    API_UNAUTHORIZED_LINK = (By.CSS_SELECTOR, '#unauthorized')

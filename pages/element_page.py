@@ -1,7 +1,8 @@
+import requests
 from selenium.webdriver.support.select import Select
 from pages.base_page import BasePage
 from locators.Locators import TextBoxPageLocators, RadioButtonPageLocators, WebTablesPageLocators, \
-    ClickButtonsPageLocators
+    ClickButtonsPageLocators, LinksPageLocators
 from generator.generator import generate_data
 
 
@@ -124,7 +125,7 @@ class WebTablesPage(BasePage):
         """returns [[...], [...]]"""
         all_persons = self.elements_are_present(self.locators.PERSONS)
         output_persons = [[i.text for i in person.find_elements(*self.locators.ALL_DATA_OF_CURRENT_PERSON)[:-1]]
-                for person in all_persons]
+                          for person in all_persons]
         return output_persons
 
     def search_by_any_key(self, query=2):
@@ -166,7 +167,32 @@ class ClickButtonsPage(BasePage):
 
     def get_click_result(self, butt):
         match butt:
-            case 'double': butt = self.locators.DOUBLE_CLICK_MESS
-            case 'right': butt = self.locators.RIGHT_CLICK_MESS
-            case 'single': butt = self.locators.SINGLE_CLICK_MESS
+            case 'double':
+                butt = self.locators.DOUBLE_CLICK_MESS
+            case 'right':
+                butt = self.locators.RIGHT_CLICK_MESS
+            case 'single':
+                butt = self.locators.SINGLE_CLICK_MESS
         return self.element_is_visible(butt).text
+
+
+class LinksPage(BasePage):
+    locators = LinksPageLocators()
+
+    def click_simple_link(self):
+        self.element_is_visible(self.locators.SIMPLE_LINK).click()
+
+    def get_tab_url(self):
+        return self.driver.current_url
+
+    def click_api_link(self, api_link):
+        match api_link:
+            case 'Created': self.element_is_visible(self.locators.API_CREATED_LINK).click()
+            case 'Moved': self.element_is_visible(self.locators.API_MOVED_LINK).click()
+            case 'Unauthorized': self.element_is_visible(self.locators.API_UNAUTHORIZED_LINK).click()
+
+    def get_satus_mess_and_code(self, api_link):
+        res = requests.get(f'https://demoqa.com/{api_link}')
+        status_mess = res.reason
+        status_code = res.status_code
+        return str(status_code), status_mess

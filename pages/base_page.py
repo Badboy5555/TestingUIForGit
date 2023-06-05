@@ -39,3 +39,6 @@ class BasePage:
     def action_right_click(self, elem):
         action = ActionChains(self.driver)
         action.context_click(elem).perform()
+
+    def switch_tab(self, number):
+        self.driver.switch_to.window(self.driver.window_handles[number])
