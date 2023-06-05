@@ -1,8 +1,10 @@
 import random
 import time
 
+
 import pytest
-from pages.element_page import TextBoxPage, RadioButtonPage, WebTablesPage, ClickButtonsPage, LinksPage
+from pages.element_page import TextBoxPage, RadioButtonPage, WebTablesPage, ClickButtonsPage, LinksPage, \
+    UploadDownloadPage
 
 
 class TestElements:
@@ -12,7 +14,8 @@ class TestElements:
             tbox_page = TextBoxPage(driver, url)
             tbox_page.open()
             input_full_name, input_email, input_current_address, input_permanent_address = tbox_page.fill_input_form()
-            output_full_name, output_email, output_current_address, output_permanent_address = tbox_page.get_output_form()
+            output_full_name, output_email, output_current_address, output_permanent_address = \
+                tbox_page.get_output_form()
 
             assert input_full_name == output_full_name, 'There is a missing in a full_name'
             assert input_email == output_email, 'There is a missing in a email'
@@ -172,3 +175,23 @@ class TestElements:
                            status_mess in 'Link has responded with staus 401 and status text Unauthorized', \
                            'Wrong status message or status code'
 
+    @pytest.mark.usefixtures('test_upload_download_page_setup')
+    class TestUploadDownload:
+        @pytest.fixture
+        def test_upload_download_page_setup(self, driver2):
+            url = 'https://demoqa.com/upload-download'
+            self.upload_download_page = UploadDownloadPage(driver2, url)
+            self.upload_download_page.open()
+
+        @pytest.mark.parametrize('file_path', [r'C:\sdi.cfg'])
+        def test_upload_file(self, file_path):
+            self.upload_download_page.upload_file(file_path)
+            local_file_name = file_path.split('\\')[-1]
+            server_file_name = self.upload_download_page.get_file_name()
+
+            assert local_file_name == server_file_name, 'Filenames are not equal'
+
+        def test_download_file(self):
+            server_file = self.upload_download_page.download_file()
+            assert self.upload_download_page.check_files_equals(r'F:\sampleFile.jpeg', server_file),\
+            'Filenames are not equal'

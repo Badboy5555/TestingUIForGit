@@ -1,8 +1,13 @@
+import base64
+import filecmp
+import random
+
 import requests
+
 from selenium.webdriver.support.select import Select
 from pages.base_page import BasePage
 from locators.Locators import TextBoxPageLocators, RadioButtonPageLocators, WebTablesPageLocators, \
-    ClickButtonsPageLocators, LinksPageLocators
+    ClickButtonsPageLocators, LinksPageLocators, UploadDownloadPageLocators
 from generator.generator import generate_data
 
 
@@ -187,12 +192,39 @@ class LinksPage(BasePage):
 
     def click_api_link(self, api_link):
         match api_link:
-            case 'Created': self.element_is_visible(self.locators.API_CREATED_LINK).click()
-            case 'Moved': self.element_is_visible(self.locators.API_MOVED_LINK).click()
-            case 'Unauthorized': self.element_is_visible(self.locators.API_UNAUTHORIZED_LINK).click()
+            case 'Created':
+                self.element_is_visible(self.locators.API_CREATED_LINK).click()
+            case 'Moved':
+                self.element_is_visible(self.locators.API_MOVED_LINK).click()
+            case 'Unauthorized':
+                self.element_is_visible(self.locators.API_UNAUTHORIZED_LINK).click()
 
     def get_satus_mess_and_code(self, api_link):
         res = requests.get(f'https://demoqa.com/{api_link}')
         status_mess = res.reason
         status_code = res.status_code
         return str(status_code), status_mess
+
+
+class UploadDownloadPage(BasePage):
+    locators = UploadDownloadPageLocators()
+
+    def upload_file(self, file_path):
+        self.element_is_present(self.locators.UPLOAD_BUTT).send_keys(file_path)
+
+    def get_file_name(self):
+        return self.element_is_visible(self.locators.UPLOAD_FILE_PATH).text.split('\\')[-1]
+
+    def download_file(self):
+        link = self.element_is_present(self.locators.DOWNLOAD_BUTT).get_attribute('href').split(',')[-1]
+        file = base64.b64decode(link)
+        server_file = rf'F:\a{random.randint(1,99)}b.jpeg'
+        with open(server_file, 'wb+') as F:
+            F.write(file)
+        return server_file
+
+    def check_files_equals(self, local_file, server_file):
+        """Use filecmp to check if files are equal. Utility's shallow=True' mode check files inside."""
+        return filecmp.cmp(local_file, server_file, shallow=True)
+
+

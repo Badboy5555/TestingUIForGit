@@ -73,3 +73,9 @@ class LinksPageLocators:
     API_CREATED_LINK = (By.CSS_SELECTOR, '#created')
     API_MOVED_LINK = (By.CSS_SELECTOR, '#moved')
     API_UNAUTHORIZED_LINK = (By.CSS_SELECTOR, '#unauthorized')
+
+class UploadDownloadPageLocators:
+    UPLOAD_BUTT = (By.CSS_SELECTOR, '#uploadFile')
+    UPLOAD_FILE_PATH = (By.CSS_SELECTOR, '#uploadedFilePath')
+    DOWNLOAD_BUTT = (By.CSS_SELECTOR, '#downloadButton')
+
