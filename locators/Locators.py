@@ -64,6 +64,7 @@ class ClickButtonsPageLocators:
     RIGHT_CLICK_MESS = (By.CSS_SELECTOR, '#rightClickMessage')
     SINGLE_CLICK_MESS = (By.CSS_SELECTOR, '#dynamicClickMessage')
 
+
 class LinksPageLocators:
     #New tab liks
     SIMPLE_LINK = (By.CSS_SELECTOR, '#simpleLink')
@@ -74,8 +75,15 @@ class LinksPageLocators:
     API_MOVED_LINK = (By.CSS_SELECTOR, '#moved')
     API_UNAUTHORIZED_LINK = (By.CSS_SELECTOR, '#unauthorized')
 
+
 class UploadDownloadPageLocators:
     UPLOAD_BUTT = (By.CSS_SELECTOR, '#uploadFile')
     UPLOAD_FILE_PATH = (By.CSS_SELECTOR, '#uploadedFilePath')
     DOWNLOAD_BUTT = (By.CSS_SELECTOR, '#downloadButton')
+
+
+class DynamicPropertiesPageLocators:
+    WILL_ENABLE = (By.CSS_SELECTOR, '#enableAfter')
+    CHANGE_COLOR = (By.CSS_SELECTOR, '#colorChange')
+    VISIBLE_AFTER = (By.CSS_SELECTOR, '#visibleAfter')
 

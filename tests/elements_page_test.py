@@ -4,7 +4,7 @@ import time
 
 import pytest
 from pages.element_page import TextBoxPage, RadioButtonPage, WebTablesPage, ClickButtonsPage, LinksPage, \
-    UploadDownloadPage
+    UploadDownloadPage, DynamicPropertiesPage
 
 
 class TestElements:
@@ -195,3 +195,22 @@ class TestElements:
             server_file = self.upload_download_page.download_file()
             assert self.upload_download_page.check_files_equals(r'F:\sampleFile.jpeg', server_file),\
             'Filenames are not equal'
+
+    @pytest.mark.usefixtures('test_dynamic_properties_page_setup')
+    class TestDynamicProperties:
+        @pytest.fixture
+        def test_dynamic_properties_page_setup(self, driver2):
+            url = 'https://demoqa.com/dynamic-properties'
+            self.dynamic_properties_page = DynamicPropertiesPage(driver2, url)
+            self.dynamic_properties_page.open()
+
+        def test_will_enable(self):
+            assert self.dynamic_properties_page.check_will_enable(), 'Button "Will enable 5 seconds" is not enable'
+
+        def test_change_color(self):
+            color_before, color_after = self.dynamic_properties_page.check_color_change()
+
+            assert color_before != color_after, 'Colors are equal'
+
+        def test_visible_after(self):
+            assert self.dynamic_properties_page.check_visible_after(), 'Button "Visible After 5 Seconds" is not visible'

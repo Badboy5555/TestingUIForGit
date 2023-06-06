@@ -1,13 +1,16 @@
 import base64
 import filecmp
 import random
+import time
 
 import requests
 
+from selenium.common import TimeoutException
 from selenium.webdriver.support.select import Select
+
 from pages.base_page import BasePage
 from locators.Locators import TextBoxPageLocators, RadioButtonPageLocators, WebTablesPageLocators, \
-    ClickButtonsPageLocators, LinksPageLocators, UploadDownloadPageLocators
+    ClickButtonsPageLocators, LinksPageLocators, UploadDownloadPageLocators, DynamicPropertiesPageLocators
 from generator.generator import generate_data
 
 
@@ -218,7 +221,7 @@ class UploadDownloadPage(BasePage):
     def download_file(self):
         link = self.element_is_present(self.locators.DOWNLOAD_BUTT).get_attribute('href').split(',')[-1]
         file = base64.b64decode(link)
-        server_file = rf'F:\a{random.randint(1,99)}b.jpeg'
+        server_file = rf'F:\a{random.randint(1, 99)}b.jpeg'
         with open(server_file, 'wb+') as F:
             F.write(file)
         return server_file
@@ -228,3 +231,25 @@ class UploadDownloadPage(BasePage):
         return filecmp.cmp(local_file, server_file, shallow=True)
 
 
+class DynamicPropertiesPage(BasePage):
+    locators = DynamicPropertiesPageLocators()
+
+    def check_will_enable(self):
+        try:
+            self.element_is_clicable(self.locators.WILL_ENABLE, 5)
+            return 1
+        except TimeoutException:
+            return 0
+
+    def check_color_change(self):
+        color_before = self.element_is_present(self.locators.CHANGE_COLOR).value_of_css_property('color')
+        time.sleep(5)
+        color_after = self.element_is_present(self.locators.CHANGE_COLOR).value_of_css_property('color')
+        return color_before, color_after
+
+    def check_visible_after(self):
+        try:
+            self.element_is_visible(self.locators.VISIBLE_AFTER, 5)
+            return 1
+        except TimeoutException:
+            return 0
