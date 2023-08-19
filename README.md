@@ -1,2 +1,2 @@
 # TestingUIForGit
-POM testing UI example
+<b>POM testing UI example</b>
