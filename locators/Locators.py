@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 
 
-class TextBoxPageLocators:
+class TextBoxesPageLocators:
     # Input form
     INPUT_FULL_NAME = (By.CSS_SELECTOR, '#userName')
     INPUT_EMAIL = (By.CSS_SELECTOR, '#userEmail')
@@ -17,7 +17,7 @@ class TextBoxPageLocators:
     OUTPUT_PERMANENT_ADDRESS = (By.CSS_SELECTOR, '#output #permanentAddress')
 
 
-class RadioButtonPageLocators:
+class RadioButtonsPageLocators:
     YES = (By.CSS_SELECTOR, 'label[for="yesRadio"]')
     NO = (By.CSS_SELECTOR, 'label[for="noRadio"]')
     IMPRESSIVE = (By.CSS_SELECTOR, 'label[for="impressiveRadio"]')
@@ -35,6 +35,7 @@ class WebTablesPageLocators:
     SALARY = (By.CSS_SELECTOR, '#salary')
     DEPARTMENT = (By.CSS_SELECTOR, '#department')
     SUBMIT_BUTT = (By.CSS_SELECTOR, '#submit')
+    REGISTRATION_FORM = (By.CSS_SELECTOR, '#registration-form-modal')
 
     # Result table
     # Magic time =)
