@@ -8,5 +8,5 @@
 - Тестовые данные: предназначены для тестирования функции Add, подготовлены в формате csv — [ссылка](https://github.com/Badboy5555/TestingUIForGit_POM/blob/main/data/test-results.csv)
 - Написаны автотесты: также тесты покрывают некоторый другой функционал вкладки Elements — [ссылка](https://github.com/Badboy5555/TestingUIForGit_POM/blob/main/tests/elements_page_test.py)
 - Подготовлен Allure-отчёт:  
-  * Allure-results [ссылка](https://github.com/Badboy5555/TestingUIForGit_POM/tree/main/allure_results)  
+  * Allure-results [ссылка](https://github.com/Badboy5555/TestingUIForGit_POM/blob/main/allure_results.zip)  
   * Allure-report [ссылка](https://github.com/Badboy5555/TestingUIForGit_POM/tree/main/allure_report)
