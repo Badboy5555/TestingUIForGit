@@ -1,6 +1,6 @@
 # TestingUIForGit
 **POM testing. WebUI example**  
-Пример организации WebUI автотестов по тестированию ресурса https://demoqa.com/elements.  
+Пример организации WebUI-тестирования ресурса https://demoqa.com/elements.  
 Использован POM, стэк: Python+Selenium+Pytest+Allure.  
 Для вкладки Elements-> Web Tables выполнено:
 - Чек-лист: функциональные и нефункциональные проверки, выполнен в Word-документе — [ссылка](https://github.com/Badboy5555/TestingUIForGit_POM/blob/main/%D0%A7%D0%B5%D0%BA-%D0%BB%D0%B8%D1%81%D1%82.docx)
