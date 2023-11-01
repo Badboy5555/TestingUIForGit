@@ -1,0 +1,42 @@
+stages: 
+  - build_test
+  - build_run_selenium
+  - test_run
+  - cleanup
+
+build_image:
+  stage: build_test
+  tags: 
+    - ui_shell
+  script:
+    - docker build -t ui_tests:$CI_COMMIT_SHORT_SHA .
+    
+build_run_selenium:
+  stage: build_run_selenium
+  tags: 
+    - ui_shell
+  script:
+    - docker run -d -p 4444:4444 
+                  -p 7900:7900 
+                  --shm-size="2g" 
+                  --restart=always 
+                  --name=selenium_$CI_COMMIT_SHORT_SHA
+                  selenium/standalone-chrome:118.0.5993.117-chromedriver-118.0.5993.70
+
+test_run:
+    stage: test_run
+    tags: 
+      - ui_shell
+    needs: ["build_image", "build_run_selenium"]
+    script:
+        - docker run --rm --name=ui_tests_$CI_COMMIT_SHORT_SHA 
+                           -e HOST_ADD=$HOST_ADD 
+                           ui_tests:$CI_COMMIT_SHORT_SHA
+
+cleanup:
+  stage: cleanup
+  tags: 
+      - ui_shell
+  script:
+    - docker rmi ui_tests:$CI_COMMIT_SHORT_SHA
+    - docker rm -f selenium_$CI_COMMIT_SHORT_SHA
