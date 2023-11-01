@@ -2,7 +2,7 @@
 
 This CI/CD pipeline base on Python WebUI autotest. 
 
-Config .gitlab-ci.yml: [link](https://gitlab.com/Badboy5555/TestingUIForGit_POM_Gitlab/-/blob/main/.gitlab-ci.yml)
+Config .gitlab-ci.yml: [link](https://github.com/Badboy5555/TestingUIForGit_POM/blob/main/.gitlab-ci.yml)
 
 # TestingUIForGitLab
 **POM testing. WebUI example**  
